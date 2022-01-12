@@ -19,3 +19,24 @@ export async function fetchRestaurants({ regionName, categoryId }) {
   const data = await response.json();
   return data;
 }
+
+export async function fetchRestaurant({ restaurantId }) {
+  const url = `https://eatgo-customer-api.ahastudio.com/restaurants/${restaurantId}`;
+  const response = await fetch(url);
+  const data = await response.json();
+  return data;
+}
+export async function postLogin({ email, password }) {
+  const url = 'https://eatgo-login-api.ahastudio.com/session';
+  const reponse = await fetch(url, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({ email, password }),
+  });
+
+  const { accessToken } = await reponse.json();
+
+  return accessToken;
+}

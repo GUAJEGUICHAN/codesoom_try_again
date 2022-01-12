@@ -1,9 +1,17 @@
-import { fetchRegions, fetchCategories, fetchRestaurants } from './api';
+import {
+  fetchRegions,
+  fetchCategories,
+  fetchRestaurants,
+  fetchRestaurant,
+  postLogin,
+} from './api';
 
 import REGIONS from '../../fixtures/regions';
 import CATEGORIES from '../../fixtures/categories';
 import RESTAURANTS from '../../fixtures/restaurants';
+import RESTAURANT from '../../fixtures/restaurant';
 
+const TOKEN = 'asdfasdfasdf';
 describe('api', () => {
   const mockFetch = (data) => {
     global.fetch = jest.fn().mockResolvedValue({
@@ -47,6 +55,34 @@ describe('api', () => {
       });
 
       expect(restaurants).toEqual(RESTAURANTS);
+    });
+  });
+  describe('fetchRestaurant', () => {
+    beforeEach(() => {
+      mockFetch(RESTAURANT);
+    });
+
+    it('returns restaurants', async () => {
+      const restaurant = await fetchRestaurant({
+        Id: 1,
+      });
+
+      expect(restaurant).toEqual(RESTAURANT);
+    });
+  });
+
+  describe('postLogin', () => {
+    beforeEach(() => {
+      mockFetch({ accessToken: TOKEN });
+    });
+
+    it('returns restaurants', async () => {
+      const accessToken = await postLogin({
+        email: 'test@exmpale.com',
+        password: 'test',
+      });
+
+      expect(accessToken).toEqual(TOKEN);
     });
   });
 });
