@@ -2,6 +2,8 @@ import {
   fetchRegions,
   fetchCategories,
   fetchRestaurants,
+  fetchRestaurant,
+  postLogin,
 } from './services/api';
 
 export function setRegions(regions) {
@@ -25,6 +27,20 @@ export function setRestaurants(restaurants) {
   };
 }
 
+export function setRestaurant(restaurant) {
+  return {
+    type: 'setRestaurant',
+    payload: { restaurant },
+  };
+}
+
+export function setAccessToken(accessToken) {
+  return {
+    type: 'setAccessToken',
+    payload: { accessToken },
+  };
+}
+
 export function selectRegion(regionId) {
   return {
     type: 'selectRegion',
@@ -36,6 +52,18 @@ export function selectCategory(categoryId) {
   return {
     type: 'selectCategory',
     payload: { categoryId },
+  };
+}
+
+export function changeLoginField({ name, value }) {
+  // console.log(name)
+  // console.log(value)
+  return {
+    type: 'changeLoginField',
+    payload: {
+      name,
+      value,
+    },
   };
 }
 
@@ -65,5 +93,30 @@ export function loadRestaurants() {
       categoryId: category.id,
     });
     dispatch(setRestaurants(restaurants));
+  };
+}
+
+export function loadRestaurant(restaurantId) {
+  return async (dispatch) => {
+    const restaurant = await fetchRestaurant({ restaurantId });
+    dispatch(setRestaurant(restaurant));
+  };
+}
+
+export function requestLogin() {
+  return async (dispatch, getState) => {
+    const {
+      loginField: {
+        email,
+        password,
+      },
+    } = getState();
+    try {
+      const accessToken = await postLogin({ email, password });
+
+      dispatch(setAccessToken(accessToken));
+    } catch (e) {
+      console.log(e);
+    }
   };
 }
