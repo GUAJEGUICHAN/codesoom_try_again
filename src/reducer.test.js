@@ -6,6 +6,8 @@ import {
   setRestaurants,
   selectRegion,
   selectCategory,
+  changeLoginField,
+  setAccessToken,
 } from './actions';
 
 describe('reducer', () => {
@@ -14,8 +16,19 @@ describe('reducer', () => {
       regions: [],
       categories: [],
       restaurants: [],
+      restaurant: {
+        // name: '',
+        // address: '',
+        // menuItems: [],
+      },
       selectedRegion: null,
       selectedCategory: null,
+      loginField: {
+        email: '',
+        password: '',
+      },
+      accessToken: '',
+
     };
 
     it('returns initialState', () => {
@@ -107,5 +120,49 @@ describe('reducer', () => {
         name: '한식',
       });
     });
+  });
+  describe('changeLoginField', () => {
+    context('when email is changed', () => {
+      it('changes email', () => {
+        const initialState = {
+          loginField: {
+            email: '',
+            password: '',
+          },
+        };
+
+        const state = reducer(initialState, changeLoginField({ name: 'email', value: 'test@example.com' }));
+
+        expect(state.loginField).toEqual({
+          ...initialState.loginField,
+          email: 'test@example.com',
+        });
+      });
+    });
+    context('when password is changed', () => {
+      it('changes password', () => {
+        const initialState = {
+          loginField: {
+            email: '',
+            password: '',
+          },
+        };
+
+        const state = reducer(initialState, changeLoginField({ name: 'password', value: 'password' }));
+
+        expect(state.loginField).toEqual({
+          ...initialState.loginField,
+          password: 'password',
+        });
+      });
+    });
+  });
+
+  describe('setAccessToken', () => {
+    const initialState = {
+      accessToken: '',
+    };
+    const state = reducer(initialState, setAccessToken('TOKEN'));
+    expect(state.accessToken).toEqual('TOKEN');
   });
 });
