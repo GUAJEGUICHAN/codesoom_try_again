@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import CategoriesContainer from './CategoriesContainer';
 import RegionsContainer from './RegionsContainer';
 import RestaurantsContainer from './RestaurantsContainer';
@@ -9,17 +10,21 @@ import {
 } from './actions';
 
 export default function RestaurantsPage() {
-  // console.log("뭐냐 RestaurantsPage")
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   useEffect(() => {
     dispatch(loadInitialData());
   });
+  function handleClickRestaurant(restaurant) {
+    navigate(`${restaurant.id}`);
+  }
+
   return (
     <>
       <RegionsContainer />
       <CategoriesContainer />
-      <RestaurantsContainer />
+      <RestaurantsContainer onClickRestaurant={handleClickRestaurant} />
     </>
   );
 }
