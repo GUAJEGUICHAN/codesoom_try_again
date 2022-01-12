@@ -2,6 +2,8 @@ import { render } from '@testing-library/react';
 
 import { useSelector } from 'react-redux';
 
+import { BrowserRouter } from 'react-router-dom';
+
 import RestaurantsContainer from './RestaurantsContainer';
 
 test('RestaurantsContainer', () => {
@@ -12,7 +14,9 @@ test('RestaurantsContainer', () => {
   }));
 
   const { container } = render((
-    <RestaurantsContainer />
+    <BrowserRouter>
+      <RestaurantsContainer />
+    </BrowserRouter>
   ));
 
   expect(container).toHaveTextContent('마법사주방');
