@@ -19,6 +19,10 @@ describe('RestaurantPage', () => {
   useDispatch.mockImplementation(() => dispatch);
   useSelector.mockImplementation((selector) => selector({
     restaurant: given.restaurant,
+    reviewField: {
+      score: undefined,
+      description: '',
+    },
   }));
 
   function renderRestaurantPage() {
