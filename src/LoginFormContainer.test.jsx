@@ -16,13 +16,9 @@ describe('LoginFormContainer', () => {
       email: '',
       password: '',
     },
-    accessToken: given.token,
+    accessToken: given.accessToken,
   }));
 
-  // 이메일 적었을 때
-  // 패스워드 적었을 때
-  // 제출 눌렀을 때
-  // 토큰값 있을 때
   beforeEach(() => {
     dispatch.mockClear();
   });
@@ -54,7 +50,7 @@ describe('LoginFormContainer', () => {
   });
 
   context('when click "Log In" ', () => {
-    it('', () => {
+    it('dispatch works', () => {
       const { getByText } = render(<LoginFormContainer />);
 
       fireEvent.click(getByText('Log In'));
@@ -64,12 +60,26 @@ describe('LoginFormContainer', () => {
   });
 
   context('when got TOKEN', () => {
-    given('token', () => 'TOKEN');
+    given('accessToken', () => 'ACCESS_TOKEN');
 
-    it('', () => {
+    it('renders Log Out button and accessToken', () => {
       const { container } = render(<LoginFormContainer />);
 
-      expect(container).toHaveTextContent('TOKEN');
+      expect(container).toHaveTextContent('Log Out');
+      expect(container).toHaveTextContent(given.accessToken);
+    });
+  });
+  context('when click "Log Out" ', () => {
+    given('accessToken', () => 'ACCESS_TOKEN');
+
+    it('dispatch works', () => {
+      const { getByText } = render(<LoginFormContainer />);
+
+      fireEvent.click(getByText('Log Out'));
+
+      expect(dispatch).toBeCalledWith({
+        type: 'logout',
+      });
     });
   });
 });
