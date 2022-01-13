@@ -6,6 +6,7 @@ import {
   postLogin,
   postReview,
 } from './services/api';
+import { saveItem } from './services/storage';
 
 export function setRegions(regions) {
   return {
@@ -39,6 +40,13 @@ export function setAccessToken(accessToken) {
   return {
     type: 'setAccessToken',
     payload: { accessToken },
+  };
+}
+export function logout() {
+  saveItem('accessToken', '');
+
+  return {
+    type: 'logout',
   };
 }
 
@@ -104,18 +112,15 @@ export function loadRestaurant(restaurantId) {
 
 export function requestLogin() {
   return async (dispatch, getState) => {
-    const {
-      loginField: {
-        email,
-        password,
-      },
-    } = getState();
+    const { loginField: { email, password } } = getState();
     try {
       const accessToken = await postLogin({ email, password });
 
+      saveItem('accessToken', accessToken);
+
       dispatch(setAccessToken(accessToken));
     } catch (e) {
-      console.log(e);
+      console.error(e);
     }
   };
 }
