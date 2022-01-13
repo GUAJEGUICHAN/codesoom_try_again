@@ -2,14 +2,22 @@ import {
   Link,
   Route, Routes,
 } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
 import AboutPage from './AboutPage';
 import HomePage from './HomePage';
 import NotFoundPage from './NotFoundPage';
 import RestaurantsPage from './RestaurantsPage';
 import RestaurantPage from './RestaurantPage';
 import LoginPage from './LoginPage';
+import { loadItem } from './services/storage';
+import { setAccessToken } from './actions';
 
 export default function App() {
+  const dispatch = useDispatch();
+  const accessToken = loadItem('accessToken');
+  if (accessToken) {
+    dispatch(setAccessToken(accessToken));
+  }
   return (
     <>
       <header>
