@@ -11,6 +11,7 @@ test('RestaurantsContainer', () => {
     restaurants: [
       { id: 1, name: '마법사주방' },
     ],
+
   }));
 
   const { container } = render((

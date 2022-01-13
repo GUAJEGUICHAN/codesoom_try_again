@@ -1,7 +1,6 @@
 import TextField from './TextField';
 
 export default function ReviewForm({
-  // reviewField: { score, description },
   onChange,
   onSubmit,
 }) {
