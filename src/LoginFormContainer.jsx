@@ -10,8 +10,7 @@ export default function LoginFormContainer() {
     accessToken: state.accessToken,
   }));
 
-  function handleChange({ target }) {
-    const { name, value } = target;
+  function handleChange({ name, value }) {
     dispatch(changeLoginField({ name, value }));
   }
 
@@ -21,7 +20,6 @@ export default function LoginFormContainer() {
 
   return (
     <LoginForm
-      loginField={loginField}
       accessToken={accessToken}
       onChange={handleChange}
       onSubmit={handleSubmit}
