@@ -1,5 +1,4 @@
 export default function LoginForm({
-  accessToken,
   onChange,
   onSubmit,
 }) {
@@ -33,10 +32,6 @@ export default function LoginForm({
         />
       </div>
       <button type="button" onClick={onSubmit}>Log In</button>
-      <div>
-        <span>토큰키:</span>
-        <span>{accessToken}</span>
-      </div>
     </>
   );
 }

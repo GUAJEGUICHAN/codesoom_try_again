@@ -1,7 +1,5 @@
 import { fireEvent, render } from '@testing-library/react';
 
-import given from 'given2';
-
 import LoginForm from './LoginForm';
 
 jest.mock('react-redux');
@@ -13,17 +11,9 @@ describe('LoginForm', () => {
   const renderLoginForm = () => (
     render((
       <LoginForm
-        loginField={
-          {
-            email: '',
-            password: '',
-          }
-        }
-        accessToken="TOKEN"
         onChange={handleChange}
         onSubmit={handleSubmit}
       />
-
     )));
 
   beforeEach(() => {
@@ -65,16 +55,6 @@ describe('LoginForm', () => {
       fireEvent.click(getByText('Log In'));
 
       expect(handleSubmit).toBeCalled();
-    });
-  });
-
-  context('when got TOKEN', () => {
-    given('token', () => 'TOKEN');
-
-    it('', () => {
-      const { container } = renderLoginForm();
-
-      expect(container).toHaveTextContent('TOKEN');
     });
   });
 });
