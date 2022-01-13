@@ -8,6 +8,7 @@ import {
   selectCategory,
   changeLoginField,
   setAccessToken,
+  changeReviewField,
 } from './actions';
 
 describe('reducer', () => {
@@ -28,7 +29,10 @@ describe('reducer', () => {
         password: '',
       },
       accessToken: '',
-
+      reviewField: {
+        score: undefined,
+        description: '',
+      },
     };
 
     it('returns initialState', () => {
@@ -159,10 +163,48 @@ describe('reducer', () => {
   });
 
   describe('setAccessToken', () => {
-    const initialState = {
-      accessToken: '',
-    };
-    const state = reducer(initialState, setAccessToken('TOKEN'));
-    expect(state.accessToken).toEqual('TOKEN');
+    it('', () => {
+      const initialState = {
+        accessToken: '',
+      };
+      const state = reducer(initialState, setAccessToken('TOKEN'));
+      expect(state.accessToken).toEqual('TOKEN');
+    });
+  });
+  describe('changeReviewField', () => {
+    context('when score is changed', () => {
+      it('changes score', () => {
+        const initialState = {
+          reviewField: {
+            score: 0,
+            description: '',
+          },
+        };
+
+        const state = reducer(initialState, changeReviewField({ name: 'score', value: 5 }));
+
+        expect(state.reviewField).toEqual({
+          ...initialState.reviewField,
+          score: 5,
+        });
+      });
+    });
+    context('when description is changed', () => {
+      it('changes description', () => {
+        const initialState = {
+          reviewField: {
+            score: 0,
+            description: '',
+          },
+        };
+
+        const state = reducer(initialState, changeReviewField({ name: 'description', value: 'description' }));
+
+        expect(state.reviewField).toEqual({
+          ...initialState.reviewField,
+          description: 'description',
+        });
+      });
+    });
   });
 });
